@@ -80,7 +80,7 @@ shinyServer(function(input, output, session) {
       axis(2, las = 1)
       library(plyr)
       labels = round_any(exp(pretty(log(aph))), 10, f = ceiling)
-      print(labels)
+      # print(labels)
       axis(1, at = log(labels), labels = labels)
       box()
       
