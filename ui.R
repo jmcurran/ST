@@ -34,7 +34,7 @@ shinyUI(navbarPage("Stochastic Threshold Calculator",
                                    min = 1, max = 150),
                       selectInput('missVal', 'Missing value code', c('0',NA)),
                       checkboxInput('weightReg', 'Weight regression', value = TRUE),
-                      sliderInput('alphaVal', HTML("&alpha;:"), 0.001, 0.1, 0.001, step = 0.001)
+                      numericInput('alphaVal', HTML("&alpha;:"), min = 0.001, max = 0.1, value = 0.001, step = 0.001)
                     ),
                     mainPanel(
                       plotOutput('plot1')
