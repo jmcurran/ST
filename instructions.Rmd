@@ -1,0 +1,20 @@
+---
+title: "File format instructions"
+author: "James Curran"
+date: "14 January 2016"
+output: html_document
+---
+
+## File format instructions
+
+This tool requires a rectangular block data in the following format:
+
+* A set of peak heights (in RFU) at one or more loci for multiple Y-STR profiles.
+    + There should be preferrably around 100 profiles. 
+    + Each column should represent a different locus.
+    + If the original profile consists of more than one allele, then the average peak height should be recorded.
+* A column which records the average peak height (APH) across the loci. We may include the ability to calculate this for you at a later date.
+* The input file should ideally be saved as a Comma Separated Value (CSV) file, although in theory tab delimited, or semi-colon delimited text should also work.
+* The input file **should not** contain any other columns than those listed above. For example, if the profiles have IDs attached, these should be removed.
+* The input file **should not** have any blank rows or columns.
+* Missing values for loci that did not show any alleles should be coded as either `0` or `NA`.

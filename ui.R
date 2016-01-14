@@ -14,15 +14,17 @@ shinyUI(navbarPage("Stochastic Threshold Calculator",
                                    c(Comma=',',
                                      Semicolon=';',
                                      Tab='\t'),
-                                   ','),
-                      radioButtons('quote', 'Quote',
-                                   c(None='',
-                                     'Double Quote'='"',
-                                     'Single Quote'="'"),
-                                   '"')
+                                   ',')
                     ),
                     mainPanel(
-                      tableOutput('contents')
+                      tabsetPanel(
+                        tabPanel('File Format',
+                                 includeMarkdown("instructions.Rmd")
+                        ),
+                        tabPanel("File Contents",
+                          tableOutput('contents')
+                        )
+                      )
                     )
                   )
          ),
@@ -48,7 +50,7 @@ shinyUI(navbarPage("Stochastic Threshold Calculator",
                                ),
                                column(3,
                                       img(class="img-polaroid",
-                                          src=paste0("https://www.stat.auckland.ac.nz/images/people/jamescurran.jpg"))
+                                          src=paste0("http://www.stats.org.nz/Newsletter73/images/JamesCurran.JPG"))
                                )
                              )
                     )
