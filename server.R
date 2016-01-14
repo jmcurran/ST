@@ -10,22 +10,15 @@ library(shiny)
 
 
 shinyServer(function(input, output, session) {
-  output$plot <- renderPlot({
-    plot(cars, type=input$plotType)
-  })
-  
-  output$summary <- renderPrint({
-    summary(cars)
-  })
-  
   Dataset = reactive({
     inFile <- input$file1
     
     if (is.null(inFile))
       return(NULL)
     
-    read.csv(inFile$datapath, header=input$header, sep=input$sep, 
-                      quote=input$quote)
+    myData = read.csv(inFile$datapath, header = input$header, sep = input$sep)
+    updateSelectInput(session, 'aphColName', choices = sort(names(myData)))
+    return(myData)
   })
   
   output$contents <- renderTable({
@@ -36,19 +29,7 @@ shinyServer(function(input, output, session) {
     # column will contain the local filenames where the data can
     # be found.
     
-    updateSelectInput(session, 'aphColName', choices = sort(names(Dataset())))
     return(Dataset())
-  })
-  
-  output$logRegControls <- renderUI({
-    inFile <- input$file1
-    
-    if(is.null(inFile))
-      return(data.frame())
-  })
-  
-  output$table <- DT::renderDataTable({
-    DT::datatable(cars)
   })
   
   output$plot1 = renderPlot({
@@ -74,8 +55,10 @@ shinyServer(function(input, output, session) {
       fit = glm(cbind(x, n - x)~log(aph), weights = w, family = binomial)
       yhat = x / n
       plot(fitted(fit)~log(aph), ylab = "Fitted values", xlab = "Average Peak Height",
-           type = 'l', ylim = c(0, 1),
+           type = 'n', ylim = c(0, 1.0),
            axes = FALSE)
+      abline(h = 0, col = "lightgrey")
+      lines(fitted(fit)~log(aph))
       points(yhat~log(aph))
       axis(2, las = 1)
       library(plyr)
