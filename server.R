@@ -53,12 +53,14 @@ shinyServer(function(input, output, session) {
       }
   
       fit = glm(cbind(x, n - x)~log(aph), weights = w, family = binomial)
+      
       yhat = x / n
       plot(fitted(fit)~log(aph), ylab = "Fitted values", xlab = "Average Peak Height",
            type = 'n', ylim = c(0, 1.0),
            axes = FALSE)
       abline(h = 0, col = "lightgrey")
-      lines(fitted(fit)~log(aph))
+      o = order(log(aph))
+      lines(fitted(fit)[o]~log(aph)[o])
       points(yhat~log(aph))
       axis(2, las = 1)
       library(plyr)
@@ -81,7 +83,7 @@ shinyServer(function(input, output, session) {
       ST = st(input$alphaVal)
       print(ST)
       abline(v = log(ST), lty = 2, lwd = 1.5)
-      text(log(ST) + 0.2, 0.95, sprintf("%d", ST), adj = 0, cex = 1.5, col = "firebrick4")
+      text(log(ST) + 0.2, 0.95, sprintf("%f", ST), adj = 0, cex = 1.5, col = "firebrick4")
     }
   })
 })
